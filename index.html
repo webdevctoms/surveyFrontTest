@@ -9,30 +9,77 @@
 </head>
 <body>
 	<form>
-		<label class="jsQuestion" id="answer1">Question 1</label>
+		<label class="jsQuestion" for="answer1">Question 1</label>
 		<input type="number" id="answer1" class="jsAnswer"/>
-		<label class="jsQuestion" id="answer2">Question 2</label>
+		<label class="jsQuestion" for="answer2">Question 2</label>
 		<input type="text" id="answer2" class="jsAnswer"/>
-		<label class="jsQuestion" id="answer3">Question 3</label>
-		<select id="answer3" class="jsAnswer">
+		<label class="jsQuestion" for="answer3">Question 3</label>
+		<select id="answer3" class="jsAnswerSelect">
 			<option value="1">Choice 1</option>
 			<option value="2">Choice 2</option>
 			<option value="3">Choice 3</option>
 		</select>
+		<label for="email">Email</label>
+		<input type="email" name="email" id="email" class="jsEmail"/>
+		<input style="width:0;height: 0;" type="checkbox" id="jsCheck"/>
+		<div class="jsSuccess"></div>
+		<div class="jsError"></div>
 		<button class="jsSubmit">Submit</button>
 	</form>
 	<script type="text/javascript">
+		function submitSuccess(data){
+			console.log("success");
+		}
+
+		function submitError(err){
+			console.log("error");
+		}
+
+		function clearMessages(){
+			$(".jsSuccess").empty();
+			$(".jsError").empty();
+		}
+
 		function submitClicked(){
 			$(".jsSubmit").click(function(event){
 				event.preventDefault();
+				clearMessages();
+				let questionsArr = [];
+				let answersArr = [];
+
 				$(".jsQuestion").each(function(index){
-					console.log($(this).text());
+					//console.log($(this).text());
+					questionsArr.push($(this).text());
 				});
 				$(".jsAnswer").each(function(index){
-					console.log($(this).val());
+					//console.log($(this).val());
+					answersArr.push($(this).text());
 				});
-
+				answersArr.push($(".jsAnswerSelect").val());
+				const check = $("#jsCheck").prop('checked');
+				console.log(check);
+				$(".jsSuccess").append("<p style='color:green;'>Success message</p>");
+				$(".jsError").append("<p style='color:red;'>Error message</p>");
+				const email = $('.jsEmail').val();
+				console.log(email);
 				console.log("submit pressed");
+				let surveyData = {
+					questions: questionsArr,
+					answers:answersArr,
+					email:email
+				}
+
+				const settings = {
+					method: "POST",
+					contentType: 'application/json',
+					url:"https://ctomssurvey.herokuapp.com/api/survey",
+					data:JSON.stringify(surveyData),
+					dataType: 'json',
+					success: submitSuccess,
+					error: submitError
+				};
+
+				$.ajax(settings);
 			});
 		}
 
