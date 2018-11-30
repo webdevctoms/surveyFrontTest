@@ -6,21 +6,67 @@
   src="https://code.jquery.com/jquery-1.11.3.min.js"
   integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g="
   crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 	<form>
-		<label class="jsQuestion" for="answer1">Question 1</label>
-		<input type="number" id="answer1" class="jsAnswer"/>
-		<label class="jsQuestion" for="answer2">Question 2</label>
-		<input type="text" id="answer2" class="jsAnswer"/>
-		<label class="jsQuestion" for="answer3">Question 3</label>
-		<select id="answer3" class="jsAnswerSelect">
-			<option value="1">Choice 1</option>
-			<option value="2">Choice 2</option>
-			<option value="3">Choice 3</option>
-		</select>
-		<label for="email">Email</label>
-		<input type="email" name="email" id="email" class="jsEmail"/>
+		<div class="centerContainer">
+		<div>
+			<label class="jsQuestion" for="answer1">How Long Have You Been Shopping with CTOMS</label>
+		</div>
+		<div>
+			<select id="answer1" class="jsAnswer inputreq">
+				<option value="Less than a year">Less than a year</option>
+				<option value="1-3 Yrs">1-3 Yrs</option>
+				<option value="I haven't purchased before.">I haven't purchased before.</option>
+			</select>
+		</div>
+		<div>
+			<label class="jsQuestion" for="answer2">How do you purchase our items?</label>
+		</div>
+		<div>
+			<select id="answer2" class="jsAnswer inputreq">
+				<option value="Website">Website</option>
+				<option value="Over the Phone">Over the Phone</option>
+				<option value="In-Person">In-Person</option>
+				<option value="I haven't purchased before.">I haven't purchased before.</option>
+			</select>
+		</div>
+		<div>
+			<label class="jsQuestion" for="answer3">If you shop on our website, how would you rate your experience?</label>
+		</div>
+		<div>
+			<select id="answer3" class="jsAnswer inputreq">
+				<option value="0">0 Needs Improvment</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10 Excellent</option>
+			</select>
+		</div>
+		<div>
+			<label class="jsQuestion" for="answer4">Are you familiar with what services/ products CTOMS provides?</label>
+		</div>
+		<div>
+			<select id="answer4" class="jsAnswer inputreq">
+				<option value="Yes I know about CTOMS products and training">Yes I know about CTOMS products and training</option>
+				<option value="I know about CTOMS products but not the training">I know about CTOMS products but not the training</option>
+				<option value="I only know about one or two CTOMS products">I only know about one or two CTOMS products</option>
+				<option value="I'm not familiar with any specific CTOMS products/ training">I'm not familiar with any specific CTOMS products/ training</option>
+			</select>
+		</div>
+		<div>
+			<label for="email">Email</label>
+		</div>
+		<div>
+			<input type="email" name="email" id="email" class="jsEmail"/>
+		</div>
 		<input style="width:0;height: 0;" type="checkbox" id="jsCheck"/>
 		<div class="jsSuccess"></div>
 		<div class="jsError"></div>
@@ -30,11 +76,13 @@
 		function submitSuccess(data){
 			console.log("success");
 			$(".jsSuccess").append("<p style='color:green;'>Data Sent</p>");
+			$(".jsSubmit").prop('disabled',false);
 		}
 
 		function submitError(err){
 			console.log("error");
 			$(".jsError").append("<p style='color:red;'>An Error Occured</p>");
+			$(".jsSubmit").prop('disabled',false);
 		}
 
 		function clearMessages(){
@@ -45,6 +93,7 @@
 		function submitClicked(){
 			$(".jsSubmit").click(function(event){
 				event.preventDefault();
+				$(".jsSubmit").prop('disabled',true);
 				clearMessages();
 				let questionsArr = [];
 				let answersArr = [];
@@ -57,7 +106,7 @@
 					//console.log($(this).val());
 					answersArr.push($(this).val());
 				});
-				answersArr.push($(".jsAnswerSelect").val());
+				//answersArr.push($(".jsAnswerSelect").val());
 				const check = $("#jsCheck").prop('checked');
 				console.log(check);
 				
