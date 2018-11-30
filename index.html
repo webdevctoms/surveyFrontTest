@@ -29,10 +29,12 @@
 	<script type="text/javascript">
 		function submitSuccess(data){
 			console.log("success");
+			$(".jsSuccess").append("<p style='color:green;'>Data Sent</p>");
 		}
 
 		function submitError(err){
 			console.log("error");
+			$(".jsError").append("<p style='color:red;'>An Error Occured</p>");
 		}
 
 		function clearMessages(){
@@ -53,13 +55,12 @@
 				});
 				$(".jsAnswer").each(function(index){
 					//console.log($(this).val());
-					answersArr.push($(this).text());
+					answersArr.push($(this).val());
 				});
 				answersArr.push($(".jsAnswerSelect").val());
 				const check = $("#jsCheck").prop('checked');
 				console.log(check);
-				$(".jsSuccess").append("<p style='color:green;'>Success message</p>");
-				$(".jsError").append("<p style='color:red;'>Error message</p>");
+				
 				const email = $('.jsEmail').val();
 				console.log(email);
 				console.log("submit pressed");
@@ -67,6 +68,11 @@
 					questions: questionsArr,
 					answers:answersArr,
 					email:email
+				}
+				if(check){
+					console.log("checked");
+					submitSuccess();
+					return 0;
 				}
 
 				const settings = {
