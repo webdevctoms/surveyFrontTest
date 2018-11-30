@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<script
+  src="https://code.jquery.com/jquery-1.11.3.min.js"
+  integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+	<form>
+		<label class="jsQuestion" id="answer1">Question 1</label>
+		<input type="number" id="answer1" class="jsAnswer"/>
+		<label class="jsQuestion" id="answer2">Question 2</label>
+		<input type="text" id="answer2" class="jsAnswer"/>
+		<label class="jsQuestion" id="answer3">Question 3</label>
+		<select id="answer3" class="jsAnswer">
+			<option value="1">Choice 1</option>
+			<option value="2">Choice 2</option>
+			<option value="3">Choice 3</option>
+		</select>
+		<button class="jsSubmit">Submit</button>
+	</form>
+	<script type="text/javascript">
+		function submitClicked(){
+			$(".jsSubmit").click(function(event){
+				event.preventDefault();
+				$(".jsQuestion").each(function(index){
+					console.log($(this).text());
+				});
+				$(".jsAnswer").each(function(index){
+					console.log($(this).val());
+				});
+
+				console.log("submit pressed");
+			});
+		}
+
+		function initPage(){
+			submitClicked();
+		}
+		$(initPage);
+	</script>
+</body>
+</html>
